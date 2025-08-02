@@ -5,35 +5,36 @@ import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import { formatterus } from "../utils/formatter";
 dayjs.extend(localizedFormat);
 
 const columnHelper = createColumnHelper<Crypto>();
 
 export const customersColumns = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <IndeterminateCheckbox
-        {...{
-          checked: table.getIsAllRowsSelected(),
-          indeterminate: table.getIsSomeRowsSelected(),
-          onChange: table.getToggleAllRowsSelectedHandler(),
-        }}
-      />
-    ),
-    cell: ({ row }) => (
-      <div className="px-1">
-        <IndeterminateCheckbox
-          {...{
-            checked: row.getIsSelected(),
-            disabled: !row.getCanSelect(),
-            indeterminate: row.getIsSomeSelected(),
-            onChange: row.getToggleSelectedHandler(),
-          }}
-        />
-      </div>
-    ),
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <IndeterminateCheckbox
+  //       {...{
+  //         checked: table.getIsAllRowsSelected(),
+  //         indeterminate: table.getIsSomeRowsSelected(),
+  //         onChange: table.getToggleAllRowsSelectedHandler(),
+  //       }}
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="px-1">
+  //       <IndeterminateCheckbox
+  //         {...{
+  //           checked: row.getIsSelected(),
+  //           disabled: !row.getCanSelect(),
+  //           indeterminate: row.getIsSomeSelected(),
+  //           onChange: row.getToggleSelectedHandler(),
+  //         }}
+  //       />
+  //     </div>
+  //   ),
+  // },
   columnHelper.accessor("id", {
     header: "ID",
     cell: ({ row }) => <span>{row?.original?.id}</span>,
@@ -59,15 +60,11 @@ export const customersColumns = [
     },
   }),
 
-  columnHelper.accessor("date_added", {
-    header: "Fecha de agregado",
+  columnHelper.accessor("quote.USD.price", {
+    header: "Precio actual (USD)",
     cell: ({ row }) => {
-      const createdAt = row?.original?.date_added;
-      return (
-        <span>
-          {createdAt ? dayjs(createdAt).locale("es").format("LLL") : "--"}
-        </span>
-      );
+      const price = row?.original?.quote?.USD?.price;
+      return <span>{formatterus.format(price)}</span>;
     },
   }),
   columnHelper.accessor("quote.USD", {

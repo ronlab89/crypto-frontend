@@ -5,7 +5,10 @@ import { getAllCryptos } from "@/libs/services/coinmarket";
 import { useLoadingStore } from "@/store/loading.store";
 import { customersColumns } from "@/libs/columns/crypto.columns";
 import Loader from "@/components/ui/Loader";
-import { ChartComponent } from "@/components/charts/ChartComponent";
+import BarChart from "@/components/charts/BarChart";
+import LineChart from "@/components/charts/LineChart";
+import DoughnutChart from "@/components/charts/DoughnutChart";
+import RadarChart from "@/components/charts/RadarChart";
 
 const Home = () => {
   const cryptos = useCoinmarketStore((state) => state.cryptos);
@@ -20,18 +23,39 @@ const Home = () => {
     });
   };
 
-  const initialData = [
-    { time: "2018-12-22", value: 32.51 },
-    { time: "2018-12-23", value: 31.11 },
-    { time: "2018-12-24", value: 27.02 },
-    { time: "2018-12-25", value: 27.32 },
-    { time: "2018-12-26", value: 25.17 },
-    { time: "2018-12-27", value: 28.89 },
-    { time: "2018-12-28", value: 25.46 },
-    { time: "2018-12-29", value: 23.92 },
-    { time: "2018-12-30", value: 22.68 },
-    { time: "2018-12-31", value: 22.67 },
-  ];
+  // 📈 Datos para Percentage Line Chart
+  const timeLabels = ["1h", "24h", "7d", "30d"];
+  const percentageDatasets = cryptos.map((c) => ({
+    label: c.symbol,
+    data: [
+      c.quote.USD.percent_change_1h,
+      c.quote.USD.percent_change_24h,
+      c.quote.USD.percent_change_7d,
+      c.quote.USD.percent_change_30d,
+    ],
+    color: "bg-purple-500",
+  }));
+
+  // 🧩 Datos para Dominancia
+  const dominanceLabels = cryptos.map((c) => c.symbol);
+  const dominanceData = cryptos.map((c) => c.quote.USD.market_cap_dominance);
+
+  // 💹 Datos para volumen
+  const volumeLabels = cryptos.map((c) => c.name);
+  const volumeData = cryptos.map((c) => c.quote.USD.volume_24h);
+
+  // 🧠 Radar Chart - análisis de BTC
+  const btc = cryptos.find((c) => c.symbol === "BTC");
+  const radarLabels = ["1h", "24h", "7d", "Vol Δ", "Dominancia"];
+  const radarData = btc
+    ? [
+        btc.quote.USD.percent_change_1h,
+        btc.quote.USD.percent_change_24h,
+        btc.quote.USD.percent_change_7d,
+        btc.quote.USD.volume_change_24h,
+        btc.quote.USD.market_cap_dominance,
+      ]
+    : [0, 0, 0, 0, 0];
 
   useEffect(() => {
     if (cryptos.length === 0) {
@@ -46,16 +70,50 @@ const Home = () => {
           data={cryptos ?? []}
           columns={customersColumns}
           filter={false}
-          search={true}
-          pagination={true}
+          search={false}
+          pagination={false}
         />
       </article>
       <article className="flex flex-col justify-center items-start gap-10">
         <div className="w-[40vw] h-[40vh] rounded-[.5rem] bg-crypto-dark/10 dark:bg-crypto-light/10">
-          <ChartComponent data={initialData}></ChartComponent>
+          <RadarChart
+            title="Análisis técnico: BTC"
+            labels={radarLabels}
+            data={radarData}
+            label="BTC"
+            color="bg-red-500"
+          />
         </div>
         <div className="w-[40vw] h-[40vh] rounded-[.5rem] bg-crypto-dark/10 dark:bg-crypto-light/10">
-          Chart 2
+          <LineChart
+            title="Variación porcentual (1h, 24h, 7d, 30d)"
+            labels={timeLabels}
+            datasets={percentageDatasets}
+          />
+          <BarChart
+            title="Volumen 24h (USD)"
+            labels={volumeLabels}
+            datasetLabel="Volumen"
+            data={volumeData}
+            color="bg-green-400"
+          />
+          <DoughnutChart
+            title="Dominancia del mercado"
+            labels={dominanceLabels}
+            data={dominanceData}
+            colors={[
+              "bg-blue-500",
+              "bg-green-500",
+              "bg-red-500",
+              "bg-yellow-500",
+              "bg-purple-500",
+              "bg-blue-500",
+              "bg-green-500",
+              "bg-red-500",
+              "bg-yellow-500",
+              "bg-purple-500",
+            ]}
+          />
         </div>
       </article>
       {loading?.allCryptos ? <Loader text="" /> : null}

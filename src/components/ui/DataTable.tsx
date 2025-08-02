@@ -12,11 +12,13 @@ import type { SortingState } from "@tanstack/react-table";
 
 import { useToggleStore } from "@/store/toggle.store";
 import type { DataTableProps } from "@/types/datatable";
+import Angles from "@/icons/Angles";
+import Angle from "@/icons/Angle";
+import Search from "@/icons/Search";
 
 const DataTable = <T,>({
   data,
   columns,
-  filter,
   search,
   pagination,
 }: DataTableProps<T>) => {
@@ -46,7 +48,7 @@ const DataTable = <T,>({
     },
     initialState: {
       pagination: {
-        pageSize: 7,
+        pageSize: 10,
       },
     },
     onSortingChange: setSorting,
@@ -71,33 +73,39 @@ const DataTable = <T,>({
           {!search ? null : (
             <div className="relative w-[300px]">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                {/* <Search width={15} height={15} styles={"text-dizlogik-800"} /> */}
+                <Search
+                  width={15}
+                  height={15}
+                  styles={"text-crypto-dark/50 dark:text-crypto-light/50"}
+                />
               </div>
               <input
                 type="search"
                 value={filtering}
                 onChange={(e) => setFiltering(e.target.value)}
                 id="default-search"
-                className="ps-10 text-sm mb-0 flex pl-12 h-9 w-full rounded-[.5rem] border border-dizlogik-700 bg-transparent px-3 py-1 shadow-sm transition-colors font-medium text-dizlogik-800 placeholder:text-dizlogik-700 placeholder:font-normal focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-dizlogik-800 disabled:cursor-not-allowed disabled:opacity-50
+                className="ps-10 text-sm mb-0 flex pl-12 h-9 w-full rounded-[.5rem] border border-crypto-dark dark:border-crypto-light bg-transparent px-3 py-1 shadow-sm transition-colors font-medium text-crypto-dark dark:text-crypto-light placeholder:text-crypto-dark/50 dark:placeholder:text-crypto-light/50 placeholder:font-normal focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-crypto-yellow disabled:cursor-not-allowed disabled:opacity-50
               "
                 placeholder="Buscar"
                 required
               />
             </div>
           )}
-          {/* Filters */}
-          {/* {filter ? <Button>Filtros</Button> : null} */}
         </div>
       </article>
       {/* Table */}
-      <table className={`w-full h-full overflow-hidden mt-10 z-10 relative`}>
+      <table
+        className={`w-full h-full overflow-hidden ${
+          !search ? "mt-0" : "mt-10"
+        } z-10 relative`}
+      >
         <thead
-          className={`text-center font-medium tracking-[0.01rem] z-10 dizlogik-bg-dark text-dizlogik-200`}
+          className={`text-center font-medium tracking-[0.01rem] z-10 bg-crypto-yellow/50 dark:bg-crypto-yellow/50 text-crypto-dark`}
         >
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className={`w-full tex-center border border-dizlogik-800`}
+              className={`w-full tex-center border border-crypto-dark/50 dark:border-crypto-light/50`}
             >
               {headerGroup.headers.map((header, index) => (
                 <th
@@ -140,7 +148,7 @@ const DataTable = <T,>({
             table.getRowModel().rows.map((row, indexRow) => (
               <React.Fragment key={row.id}>
                 <tr
-                  className={`border border-dizlogik-300 hover:bg-dizlogik-800/10 ${
+                  className={`border border-crypto-dark/50 dark:border-crypto-light/50 hover:bg-crypto-dark/10 dark:hover:bg-crypto-light/10 ${
                     indexRow === table.getRowModel().rows.length - 1
                       ? "rounded-b-[.5rem]"
                       : ""
@@ -155,27 +163,6 @@ const DataTable = <T,>({
                     </td>
                   ))}
                 </tr>
-                {/* Subfilas */}
-                {/* {row.getIsExpanded() && (
-                <tr>
-                  <td colSpan={row.getAllCells().length}>
-                    <div className="bg-gray-50 p-4 flex justify-between items-center">
-                      <div>
-                        {row.original.linked_to.map((linked) => (
-                          <div key={linked._id} className="mb-3">
-                            <p className="font-semibold">
-                              {linked.cred_type === "carrier"
-                                ? "Transporte:"
-                                : "Tienda:"}
-                            </p>
-                            <span>{linked.cred_name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              )} */}
               </React.Fragment>
             ))
           )}
@@ -208,13 +195,13 @@ const DataTable = <T,>({
               id="select-page-size"
               value={table.getState().pagination.pageSize}
               onChange={(e) => table.setPageSize(Number(e.target.value))}
-              className="text-Shippingco-900 dark:text-Shippingco-100 bg-transparent"
+              className="bg-transparent"
             >
               {[5, 7, 10, 20, 30, 40, 50].map((pageSize) => (
                 <option
                   key={pageSize}
                   value={pageSize}
-                  className="text-Shippingco-900"
+                  className="text-crypto-dark dark:text-crypto-dark"
                 >
                   {pageSize}
                 </option>
@@ -234,21 +221,29 @@ const DataTable = <T,>({
               onClick={() => table.setPageIndex(0)}
               className={`${
                 table.getState().pagination.pageIndex === 0
-                  ? "text-dizlogik-800"
-                  : "cursor-pointer text-dizlogik-800 hover:bg-dizlogik-200"
-              } w-8 h-8 border-[1px] border-dashed border-dizlogik-700 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                  : "text-crypto-dark"
+              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
             >
-              {/* <Angles width={12.8} height={12.8} styles={""} /> */}
+              <Angles
+                width={12.8}
+                height={12.8}
+                styles={"group-hover:text-crypto-yellow"}
+              />
             </div>
             <div
               onClick={() => table.previousPage()}
               className={`${
                 table.getState().pagination.pageIndex === 0
-                  ? "text-dizlogik-800"
-                  : "cursor-pointer text-dizlogik-800 hover:bg-dizlogik-200"
-              } w-8 h-8 border-[1px] border-dashed border-dizlogik-700 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                  : "text-crypto-dark"
+              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
             >
-              {/* <Angle width={12.8} height={12.8} styles={""} /> */}
+              <Angle
+                width={12.8}
+                height={12.8}
+                styles={"group-hover:text-crypto-yellow"}
+              />
             </div>
             <div
               onClick={() => {
@@ -262,22 +257,30 @@ const DataTable = <T,>({
               className={`${
                 table.getState().pagination.pageIndex + 2 <=
                 table.getPageCount()
-                  ? "text-dizlogik-800"
-                  : "cursor-pointer text-dizlogik-800 hover:bg-dizlogik-200"
-              } w-8 h-8 border-[1px] border-dashed border-dizlogik-700 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                  : "text-crypto-dark"
+              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
             >
-              {/* <Angle width={12.8} height={12.8} styles={"rotate-[-180deg]"} /> */}
+              <Angle
+                width={12.8}
+                height={12.8}
+                styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
+              />
             </div>
             <div
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               className={`${
                 table.getState().pagination.pageIndex + 2 <=
                 table.getPageCount()
-                  ? "text-dizlogik-800"
-                  : "cursor-pointer text-dizlogik-800 hover:bg-dizlogik-200"
-              } w-8 h-8 border-[1px] border-dashed border-dizlogik-700 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                  : "text-crypto-dark"
+              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
             >
-              {/* <Angles width={12.8} height={12.8} styles={"rotate-[-180deg]"} /> */}
+              <Angles
+                width={12.8}
+                height={12.8}
+                styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
+              />
             </div>
           </div>
         </article>
