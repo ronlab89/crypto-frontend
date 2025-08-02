@@ -1,40 +1,11 @@
 import IndeterminateCheckbox from "@/components/ui/IndeterminateCheckbox";
+import type { Crypto } from "@/types/crypto";
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
-
-export interface Crypto {
-  id: string;
-  name: string;
-  symbol: string;
-  slug: string;
-  num_market_pairs: number;
-  date_added: string;
-  tags: string[];
-  max_supply: number;
-  circulating_supply: number;
-  total_supply: number;
-  platform: string;
-  cmc_rank: number;
-  last_updated: string;
-  quote: {
-    USD: {
-      price: number;
-      volume_24h: number;
-      market_cap: number;
-      percent_change_1h: number;
-      percent_change_24h: number;
-      percent_change_7d: number;
-      percent_change_30d: number;
-      percent_change_60d: number;
-      percent_change_90d: number;
-      last_updated: string;
-    };
-  };
-}
 
 const columnHelper = createColumnHelper<Crypto>();
 
