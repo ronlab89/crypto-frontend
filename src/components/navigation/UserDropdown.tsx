@@ -1,22 +1,24 @@
+import { useAuthStore } from "@/store/auth.store";
 import { useToggleStore } from "@/store/toggle.store";
 
 const UserDropdown = () => {
   const toggleDropdownUser = useToggleStore(
     (state) => state.toggleDropdownUser
   );
+  const userLogged = useAuthStore((state) => state.userLogged);
   return (
     <div
       className={`${
         toggleDropdownUser ? "absolute top-[25px] right-[-10px]" : "hidden"
-      } z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600`}
+      } z-50 my-4 w-56 text-base list-none bg-crypto-dark/10 rounded divide-y divide-gray-100 shadow dark:bg-crypto-light/10 dark:divide-gray-600`}
       id="dropdown"
     >
       <div className="py-3 px-4">
         <span className="block text-sm font-semibold text-gray-900 dark:text-white">
-          Neil sims
+          {userLogged?.name}
         </span>
         <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-          name@flowbite.com
+          {userLogged?.email}
         </span>
       </div>
       <ul
