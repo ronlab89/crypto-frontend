@@ -65,7 +65,7 @@ const DataTable = <T,>({
 
   return (
     <section
-      className={`w-full min-h-[80vh] max-h-full p-2 text-sm relative z-10`}
+      className={`w-full min-h-fit h-full max-h-full p-0 text-sm relative z-10`}
     >
       <article className="flex justify-between items-center">
         <div className="flex justify-start items-center gap-4">
@@ -112,7 +112,7 @@ const DataTable = <T,>({
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
-                  className={`text-center py-3 ${
+                  className={`text-center py-1.5 ${
                     index === 0
                       ? ""
                       : index === headerGroup.headers.length - 1 && ""
@@ -134,7 +134,7 @@ const DataTable = <T,>({
             </tr>
           ))}
         </thead>
-        <tbody className="overflow-hidden rounded-b-[.5rem] z-10 text-[0.8rem]">
+        <tbody className="overflow-hidden rounded-b-[.5rem] z-10 text-xs">
           {table.getRowModel().rows.length < 1 ? (
             <tr className="font-medium text-xl">
               <td

@@ -64,58 +64,70 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="w-full h-full flex justify-between items-start gap-10 p-20">
-      <article className="w-full h-full">
-        <DataTable
-          data={cryptos ?? []}
-          columns={customersColumns}
-          filter={false}
-          search={false}
-          pagination={false}
-        />
-      </article>
-      <article className="flex flex-col justify-center items-start gap-10">
-        <div className="w-[40vw] h-[40vh] rounded-[.5rem] bg-crypto-dark/10 dark:bg-crypto-light/10">
-          <RadarChart
-            title="Análisis técnico: BTC"
-            labels={radarLabels}
-            data={radarData}
-            label="BTC"
-            color="bg-red-500"
+    <section className="w-full h-full flex flex-col justify-center items-start gap-10 p-20">
+      <section className="w-full h-full flex justify-between items-start gap-10">
+        <article className="w-full h-full flex flex-col justify-center items-start gap-10">
+          <DataTable
+            data={cryptos ?? []}
+            columns={customersColumns}
+            filter={false}
+            search={false}
+            pagination={false}
           />
-        </div>
-        <div className="w-[40vw] h-[40vh] rounded-[.5rem] bg-crypto-dark/10 dark:bg-crypto-light/10">
-          <LineChart
-            title="Variación porcentual (1h, 24h, 7d, 30d)"
-            labels={timeLabels}
-            datasets={percentageDatasets}
-          />
-          <BarChart
-            title="Volumen 24h (USD)"
-            labels={volumeLabels}
-            datasetLabel="Volumen"
-            data={volumeData}
-            color="bg-green-400"
-          />
-          <DoughnutChart
-            title="Dominancia del mercado"
-            labels={dominanceLabels}
-            data={dominanceData}
-            colors={[
-              "bg-blue-500",
-              "bg-green-500",
-              "bg-red-500",
-              "bg-yellow-500",
-              "bg-purple-500",
-              "bg-blue-500",
-              "bg-green-500",
-              "bg-red-500",
-              "bg-yellow-500",
-              "bg-purple-500",
-            ]}
-          />
-        </div>
-      </article>
+          <div className="w-[40vw] h-[40vh]">
+            <LineChart
+              title="Variación porcentual (1h, 24h, 7d, 30d)"
+              labels={timeLabels}
+              datasets={percentageDatasets}
+            />
+          </div>
+        </article>
+        <article className="flex flex-col justify-center items-start gap-10">
+          <div className="w-[40vw] h-fit">
+            <RadarChart
+              title="Análisis técnico: BTC"
+              labels={radarLabels}
+              data={radarData}
+              label="BTC"
+              color="bg-red-500"
+            />
+          </div>
+        </article>
+      </section>
+      <section className="w-full h-full flex justify-between items-start gap-10 p-20">
+        <article className="w-full h-full">
+          <div className="w-full h-full">
+            <BarChart
+              title="Volumen 24h (USD)"
+              labels={volumeLabels}
+              datasetLabel="Volumen"
+              data={volumeData}
+              color="bg-green-400"
+            />
+          </div>
+        </article>
+        <article className="w-full h-full">
+          <div className="w-full h-full">
+            <DoughnutChart
+              title="Dominancia del mercado"
+              labels={dominanceLabels}
+              data={dominanceData}
+              colors={[
+                "bg-blue-500",
+                "bg-green-500",
+                "bg-red-500",
+                "bg-yellow-500",
+                "bg-purple-500",
+                "bg-blue-500",
+                "bg-green-500",
+                "bg-red-500",
+                "bg-yellow-500",
+                "bg-purple-500",
+              ]}
+            />
+          </div>
+        </article>
+      </section>
       {loading?.allCryptos ? <Loader text="" /> : null}
     </section>
   );

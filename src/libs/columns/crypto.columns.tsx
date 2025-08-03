@@ -41,17 +41,7 @@ export const customersColumns = [
   }),
   columnHelper.accessor("name", {
     header: "Nombre",
-    cell: ({ row }) => (
-      //   <span
-      //     onClick={() =>
-      //       handleCopyText(row.original.email, "el correo electrónico")
-      //     }
-      //     className="cursor-pointer hover:text-dizlogik-700"
-      //   >
-      //     {row.original.email}
-      //   </span>
-      <span>{row?.original?.name}</span>
-    ),
+    cell: ({ row }) => <span>{row?.original?.name}</span>,
   }),
   columnHelper.accessor("symbol", {
     header: "Símbolo",
@@ -59,7 +49,13 @@ export const customersColumns = [
       return <span>{row?.original?.symbol}</span>;
     },
   }),
-
+  columnHelper.accessor("quote.USD.market_cap", {
+    header: "Capitalización (USD)",
+    cell: ({ row }) => {
+      const cap = row?.original?.quote?.USD?.market_cap;
+      return <span>{formatterus.format(cap)}</span>;
+    },
+  }),
   columnHelper.accessor("quote.USD.price", {
     header: "Precio actual (USD)",
     cell: ({ row }) => {
@@ -73,7 +69,7 @@ export const customersColumns = [
       const updatedAt = row?.original?.last_updated;
       return (
         <span>
-          {updatedAt ? dayjs(updatedAt).locale("es").format("LLL") : "--"}
+          {updatedAt ? dayjs(updatedAt).locale("es").format("LL") : "--"}
         </span>
       );
     },
@@ -82,34 +78,7 @@ export const customersColumns = [
     id: "acciones",
     header: "",
     cell: ({ row }) => (
-      <div className="flex justify-center gap-2 relative">
-        {/* <Suspense fallback={""}>
-          <Modal
-            trigger={
-              <span className="text-dizlogik-700 hover:text-dizlogik-800 cursor-pointer">
-                <Edit width={18} height={18} styles={""} />
-              </span>
-            }
-            stylesTrigger=""
-            title="Editar cliente"
-          >
-            <Form type="edit" user={row.original} />
-          </Modal>
-        </Suspense>
-        <Suspense fallback={""}>
-          <Modal
-            trigger={
-              <span className="text-dizlogik-700 hover:text-dizlogik-800 cursor-pointer">
-                <Delete width={18} height={18} styles={""} />
-              </span>
-            }
-            stylesTrigger=""
-            title="Eliminar cliente"
-          >
-            <FormDelete type="delete-user" user={row.original} />
-          </Modal>
-        </Suspense> */}
-      </div>
+      <div className="flex justify-center gap-2 relative">Seleccionar</div>
     ),
   }),
 ] as ColumnDef<Crypto, unknown>[];

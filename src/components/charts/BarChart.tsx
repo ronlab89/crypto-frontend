@@ -7,7 +7,9 @@ import {
   Tooltip,
   Legend,
   Title,
+  type ChartOptions,
 } from "chart.js";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 ChartJS.register(
   CategoryScale,
@@ -33,6 +35,35 @@ export default function BarChart({
   data,
   color = "bg-blue-500",
 }: Props) {
+  const isDarkMode = useDarkMode();
+
+  const options: ChartOptions<"bar"> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: isDarkMode ? "#e5e7eb" : "#1f2937",
+        },
+      },
+      title: {
+        display: true,
+        text: title,
+        color: isDarkMode ? "#e5e7eb" : "#1f2937",
+        font: { size: 18 },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: isDarkMode ? "#e5e7eb" : "#1f2937" },
+        grid: { color: isDarkMode ? "#374151" : "#d1d5db" },
+      },
+      y: {
+        ticks: { color: isDarkMode ? "#e5e7eb" : "#1f2937" },
+        grid: { color: isDarkMode ? "#374151" : "#d1d5db" },
+      },
+    },
+  };
+
   const chartData = {
     labels,
     datasets: [
@@ -49,7 +80,7 @@ export default function BarChart({
       <h3 className="text-lg font-semibold mb-2 text-zinc-700 dark:text-zinc-100">
         {title}
       </h3>
-      <Bar data={chartData} options={{ responsive: true }} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 }
