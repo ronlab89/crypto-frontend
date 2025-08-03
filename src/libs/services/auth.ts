@@ -8,6 +8,7 @@ const login = async ({
   navigate,
   setToken,
   setLogged,
+  setUserLogged,
 }: LoginProps): Promise<void> => {
   try {
     setLoading("login", true);
@@ -18,9 +19,10 @@ const login = async ({
       withCredentials: true,
     });
     if (res.status === 200) {
-      setToken(res.data.access_token);
+      setToken(res.data.token);
       setLogged(true);
-      notify("success", "¡Bienvenido de nuevo, Dizloger!");
+      setUserLogged(res.data.user);
+      notify("success", "¡Bienvenido! ");
       navigate("/dashboard");
     }
   } catch (error) {
