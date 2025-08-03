@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "@/components/ui/DataTable";
 import { useCoinmarketStore } from "@/store/coinmarket.store";
 import { getAllCryptos } from "@/libs/services/coinmarket";
@@ -9,10 +9,14 @@ import BarChart from "@/components/charts/BarChart";
 import LineChart from "@/components/charts/LineChart";
 import DoughnutChart from "@/components/charts/DoughnutChart";
 import RadarChart from "@/components/charts/RadarChart";
+import { useToggleStore } from "@/store/toggle.store";
 
 const Home = () => {
   const cryptos = useCoinmarketStore((state) => state.cryptos);
   const setCryptos = useCoinmarketStore((state) => state.setCryptos);
+  const toggleCryptoSelected = useToggleStore(
+    (state) => state.toggleCryptoSelected
+  );
   const loading = useLoadingStore((state) => state.loading);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
@@ -44,16 +48,16 @@ const Home = () => {
   const volumeLabels = cryptos.map((c) => c.name);
   const volumeData = cryptos.map((c) => c.quote.USD.volume_24h);
 
-  // 🧠 Radar Chart - análisis de BTC
-  const btc = cryptos.find((c) => c.symbol === "BTC");
+  // 🧠 Radar Chart - análisis de Crypto Seleccionado
+  const crypto = cryptos.find((c) => c.symbol === toggleCryptoSelected);
   const radarLabels = ["1h", "24h", "7d", "Vol Δ", "Dominancia"];
-  const radarData = btc
+  const radarData = crypto
     ? [
-        btc.quote.USD.percent_change_1h,
-        btc.quote.USD.percent_change_24h,
-        btc.quote.USD.percent_change_7d,
-        btc.quote.USD.volume_change_24h,
-        btc.quote.USD.market_cap_dominance,
+        crypto.quote.USD.percent_change_1h,
+        crypto.quote.USD.percent_change_24h,
+        crypto.quote.USD.percent_change_7d,
+        crypto.quote.USD.volume_change_24h,
+        crypto.quote.USD.market_cap_dominance,
       ]
     : [0, 0, 0, 0, 0];
 
@@ -64,8 +68,13 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="w-full h-full flex flex-col justify-center items-start gap-10 p-20">
-      <section className="w-full h-full flex justify-between items-start gap-10">
+    <section className="w-full h-full flex flex-col justify-center items-start gap-0 px-20 py-10">
+      <article className="w-full h-full flex justify-between items-start gap-x-10 gap-y-0 mb-10">
+        <h2 className="text-xl font-semibold text-crypto-dark dark:text-crypto-light">
+          Top 10 Crypto Monedas{" "}
+        </h2>
+      </article>
+      <section className="w-full h-full flex justify-between items-start gap-x-10 gap-y-0">
         <article className="w-full h-full flex flex-col justify-center items-start gap-10">
           <DataTable
             data={cryptos ?? []}
@@ -74,59 +83,68 @@ const Home = () => {
             search={false}
             pagination={false}
           />
-          <div className="w-[40vw] h-[40vh]">
-            <LineChart
-              title="Variación porcentual (1h, 24h, 7d, 30d)"
-              labels={timeLabels}
-              datasets={percentageDatasets}
-            />
-          </div>
         </article>
-        <article className="flex flex-col justify-center items-start gap-10">
-          <div className="w-[40vw] h-fit">
+        <article className="">
+          <div className="w-[30vw] h-fit">
             <RadarChart
-              title="Análisis técnico: BTC"
+              title={`Análisis técnico: ${toggleCryptoSelected}`}
+              showTitle={false}
               labels={radarLabels}
               data={radarData}
               label="BTC"
               color="bg-red-500"
+              width="w-full"
+              height="h-[50vh]"
             />
           </div>
         </article>
       </section>
-      <section className="w-full h-full flex justify-between items-start gap-10 p-20">
-        <article className="w-full h-full">
-          <div className="w-full h-full">
-            <BarChart
-              title="Volumen 24h (USD)"
-              labels={volumeLabels}
-              datasetLabel="Volumen"
-              data={volumeData}
-              color="bg-green-400"
-            />
-          </div>
-        </article>
-        <article className="w-full h-full">
-          <div className="w-full h-full">
-            <DoughnutChart
-              title="Dominancia del mercado"
-              labels={dominanceLabels}
-              data={dominanceData}
-              colors={[
-                "bg-blue-500",
-                "bg-green-500",
-                "bg-red-500",
-                "bg-yellow-500",
-                "bg-purple-500",
-                "bg-blue-500",
-                "bg-green-500",
-                "bg-red-500",
-                "bg-yellow-500",
-                "bg-purple-500",
-              ]}
-            />
-          </div>
-        </article>
+      <section className="w-full h-full flex justify-between items-start gap-5 p-0 mt-10">
+        <div className="w-[30vw] h-fit">
+          <LineChart
+            title="Variación porcentual (1h, 24h, 7d, 30d)"
+            showTitle={false}
+            labels={timeLabels}
+            datasets={percentageDatasets}
+            width="w-full"
+            height="h-[35vh]"
+          />
+        </div>
+        <div className="w-[30vw] h-fit">
+          <BarChart
+            title="Volumen 24h (USD)"
+            showTitle={false}
+            labels={volumeLabels}
+            datasetLabel="Volumen"
+            data={volumeData}
+            color="bg-green-400"
+            width="w-full"
+            height="h-[35vh]"
+          />
+        </div>
+
+        <div className="w-[30vw] h-fit">
+          <DoughnutChart
+            title="Dominancia del mercado"
+            showTitle={false}
+            labels={dominanceLabels}
+            data={dominanceData}
+            colors={[
+              "bg-blue-500",
+              "bg-green-500",
+              "bg-red-500",
+              "bg-yellow-500",
+              "bg-purple-500",
+              "bg-blue-500",
+              "bg-green-500",
+              "bg-red-500",
+              "bg-yellow-500",
+              "bg-purple-500",
+            ]}
+            width="w-full"
+            height="h-[35vh]"
+          />
+        </div>
       </section>
       {loading?.allCryptos ? <Loader text="" /> : null}
     </section>

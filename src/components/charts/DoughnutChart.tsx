@@ -12,12 +12,29 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 type Props = {
   title: string;
+  showTitle?: boolean;
   labels: string[];
   data: number[];
   colors?: string[]; // tailwind classes
+  width?: string;
+  height?: string;
+  labelFontSize?: number;
+  titleFontSize?: number;
+  fontFamily?: string;
 };
 
-export default function DoughnutChart({ title, labels, data, colors }: Props) {
+export default function DoughnutChart({
+  title,
+  showTitle,
+  labels,
+  data,
+  colors,
+  width,
+  height,
+  labelFontSize,
+  titleFontSize,
+  fontFamily,
+}: Props) {
   const isDarkMode = useDarkMode();
 
   const options: ChartOptions<"doughnut"> = {
@@ -26,13 +43,20 @@ export default function DoughnutChart({ title, labels, data, colors }: Props) {
       legend: {
         labels: {
           color: isDarkMode ? "#e5e7eb" : "#1f2937",
+          font: {
+            size: labelFontSize || 10,
+            family: fontFamily || "Roboto, sans-serif",
+          },
         },
       },
       title: {
         display: true,
-        text: title,
+        text: title ?? "",
         color: isDarkMode ? "#e5e7eb" : "#1f2937",
-        font: { size: 18 },
+        font: {
+          size: titleFontSize || 16,
+          family: fontFamily || "Roboto, sans-serif",
+        },
       },
     },
   };
@@ -51,10 +75,14 @@ export default function DoughnutChart({ title, labels, data, colors }: Props) {
   };
 
   return (
-    <div className="p-4 bg-white dark:bg-zinc-900 rounded-2xl shadow">
-      <h3 className="text-lg font-semibold mb-2 text-zinc-700 dark:text-zinc-100">
-        {title}
-      </h3>
+    <div
+      className={`${width} ${height} p-2 bg-zinc-100/30 dark:bg-zinc-900 rounded-2xl shadow flex flex-col justify-center items-center`}
+    >
+      {showTitle ? (
+        <h3 className="text-sm font-semibold mb-2 text-zinc-700 dark:text-zinc-100 self-start">
+          {title}
+        </h3>
+      ) : null}
       <Doughnut data={chartData} options={options} />
     </div>
   );

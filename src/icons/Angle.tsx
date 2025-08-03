@@ -1,4 +1,4 @@
-import { IconProps } from "@/Interfaces/icon.interface";
+import type { IconProps } from "@/types/icons";
 
 const Angle = ({ width, height, styles }: IconProps) => {
   return (

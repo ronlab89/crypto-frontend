@@ -65,7 +65,7 @@ const DataTable = <T,>({
 
   return (
     <section
-      className={`w-full min-h-fit h-full max-h-full p-0 text-sm relative z-10`}
+      className={`w-full min-h-fit h-full max-h-full p-0 text-sm relative z-10 pt-[15px]`}
     >
       <article className="flex justify-between items-center">
         <div className="flex justify-start items-center gap-4">
@@ -100,19 +100,19 @@ const DataTable = <T,>({
         } z-10 relative`}
       >
         <thead
-          className={`text-center font-medium tracking-[0.01rem] z-10 bg-crypto-yellow/50 dark:bg-crypto-yellow/50 text-crypto-dark`}
+          className={`text-center font-medium tracking-[0.01rem] z-10 text-crypto-dark/80 dark:text-crypto-light/80`}
         >
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className={`w-full tex-center border border-crypto-dark/50 dark:border-crypto-light/50`}
+              className={`w-full tex-center border-t border-crypto-dark/30 dark:border-crypto-light/30`}
             >
               {headerGroup.headers.map((header, index) => (
                 <th
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
-                  className={`text-center py-1.5 ${
+                  className={`text-center py-2.5 ${
                     index === 0
                       ? ""
                       : index === headerGroup.headers.length - 1 && ""
@@ -134,7 +134,7 @@ const DataTable = <T,>({
             </tr>
           ))}
         </thead>
-        <tbody className="overflow-hidden rounded-b-[.5rem] z-10 text-xs">
+        <tbody className="overflow-hidden rounded-b-[.5rem] z-10 text-xs text-crypto-dark/50 dark:text-crypto-light/50">
           {table.getRowModel().rows.length < 1 ? (
             <tr className="font-medium text-xl">
               <td
@@ -148,14 +148,14 @@ const DataTable = <T,>({
             table.getRowModel().rows.map((row, indexRow) => (
               <React.Fragment key={row.id}>
                 <tr
-                  className={`border border-crypto-dark/50 dark:border-crypto-light/50 hover:bg-crypto-dark/10 dark:hover:bg-crypto-light/10 ${
+                  className={`border-y border-crypto-dark/30 dark:border-crypto-light/30 hover:bg-zinc-100/30 dark:hover:bg-zinc-900 ${
                     indexRow === table.getRowModel().rows.length - 1
                       ? "rounded-b-[.5rem]"
                       : ""
                   }`}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className={`text-center py-2`}>
+                    <td key={cell.id} className={`text-center py-2.5`}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

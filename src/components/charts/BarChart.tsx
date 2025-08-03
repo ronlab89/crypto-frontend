@@ -22,18 +22,30 @@ ChartJS.register(
 
 type Props = {
   title: string;
+  showTitle?: boolean;
   labels: string[];
   datasetLabel: string;
   data: number[];
   color?: string; // tailwind color class
+  width?: string;
+  height?: string;
+  labelFontSize?: number;
+  titleFontSize?: number;
+  fontFamily?: string;
 };
 
 export default function BarChart({
   title,
+  showTitle,
   labels,
   datasetLabel,
   data,
   color = "bg-blue-500",
+  width = "w-full",
+  height = "h-full",
+  labelFontSize,
+  titleFontSize,
+  fontFamily,
 }: Props) {
   const isDarkMode = useDarkMode();
 
@@ -43,22 +55,41 @@ export default function BarChart({
       legend: {
         labels: {
           color: isDarkMode ? "#e5e7eb" : "#1f2937",
+          font: {
+            size: labelFontSize || 12,
+            family: fontFamily || "Roboto, sans-serif",
+          },
         },
       },
       title: {
         display: true,
         text: title,
         color: isDarkMode ? "#e5e7eb" : "#1f2937",
-        font: { size: 18 },
+        font: {
+          size: titleFontSize || 16,
+          family: fontFamily || "Roboto, sans-serif",
+        },
       },
     },
     scales: {
       x: {
-        ticks: { color: isDarkMode ? "#e5e7eb" : "#1f2937" },
+        ticks: {
+          color: isDarkMode ? "#e5e7eb" : "#1f2937",
+          font: {
+            size: labelFontSize || 10,
+            family: fontFamily || "Roboto, sans-serif",
+          },
+        },
         grid: { color: isDarkMode ? "#374151" : "#d1d5db" },
       },
       y: {
-        ticks: { color: isDarkMode ? "#e5e7eb" : "#1f2937" },
+        ticks: {
+          color: isDarkMode ? "#e5e7eb" : "#1f2937",
+          font: {
+            size: labelFontSize || 10,
+            family: fontFamily || "Roboto, sans-serif",
+          },
+        },
         grid: { color: isDarkMode ? "#374151" : "#d1d5db" },
       },
     },
@@ -76,10 +107,14 @@ export default function BarChart({
   };
 
   return (
-    <div className="p-4 bg-white dark:bg-zinc-900 rounded-2xl shadow">
-      <h3 className="text-lg font-semibold mb-2 text-zinc-700 dark:text-zinc-100">
-        {title}
-      </h3>
+    <div
+      className={`${width} ${height} p-2 bg-zinc-100/30 dark:bg-zinc-900 rounded-2xl shadow flex flex-col justify-center items-center`}
+    >
+      {showTitle ? (
+        <h3 className="text-sm font-semibold mb-2 text-zinc-700 dark:text-zinc-100 self-start">
+          {title}
+        </h3>
+      ) : null}
       <Bar data={chartData} options={options} />
     </div>
   );

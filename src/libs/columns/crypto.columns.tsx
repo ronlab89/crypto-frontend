@@ -1,4 +1,4 @@
-import IndeterminateCheckbox from "@/components/ui/IndeterminateCheckbox";
+import IndeterminateCheckbox from "@/components/table/IndeterminateCheckbox";
 import type { Crypto } from "@/types/crypto";
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 
@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/es";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { formatterus } from "../utils/formatter";
+import SelectButton from "@/components/table/SelectButton";
 dayjs.extend(localizedFormat);
 
 const columnHelper = createColumnHelper<Crypto>();
@@ -77,8 +78,6 @@ export const customersColumns = [
   columnHelper.display({
     id: "acciones",
     header: "",
-    cell: ({ row }) => (
-      <div className="flex justify-center gap-2 relative">Seleccionar</div>
-    ),
+    cell: ({ row }) => <SelectButton crypto={row.original.symbol} />,
   }),
 ] as ColumnDef<Crypto, unknown>[];
