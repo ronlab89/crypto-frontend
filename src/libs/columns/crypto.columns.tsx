@@ -1,4 +1,3 @@
-import IndeterminateCheckbox from "@/components/table/IndeterminateCheckbox";
 import type { Crypto } from "@/types/crypto";
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+// import { useEffect } from "react";
 import DataTable from "@/components/ui/DataTable";
 import { useCoinmarketStore } from "@/store/coinmarket.store";
-import { getAllCryptos } from "@/libs/services/coinmarket";
+// import { getAllCryptos } from "@/libs/services/coinmarket";
 import { useLoadingStore } from "@/store/loading.store";
 import { customersColumns } from "@/libs/columns/crypto.columns";
 import Loader from "@/components/ui/Loader";
@@ -10,6 +10,8 @@ import LineChart from "@/components/charts/LineChart";
 import DoughnutChart from "@/components/charts/DoughnutChart";
 import RadarChart from "@/components/charts/RadarChart";
 import { useToggleStore } from "@/store/toggle.store";
+import useCryptoData from "@/hooks/useCryptoData";
+import { CountdownTimer } from "@/components/ui/CountDownTimer";
 
 const Home = () => {
   const cryptos = useCoinmarketStore((state) => state.cryptos);
@@ -19,13 +21,6 @@ const Home = () => {
   );
   const loading = useLoadingStore((state) => state.loading);
   const setLoading = useLoadingStore((state) => state.setLoading);
-
-  const getCryptos = async () => {
-    await getAllCryptos({
-      setLoading,
-      setCryptos,
-    });
-  };
 
   // 📈 Datos para Percentage Line Chart
   const timeLabels = ["1h", "24h", "7d", "30d"];
@@ -61,18 +56,32 @@ const Home = () => {
       ]
     : [0, 0, 0, 0, 0];
 
-  useEffect(() => {
-    if (cryptos.length === 0) {
-      getCryptos();
-    }
-  }, []);
+  // const getCryptos = async () => {
+  //   await getAllCryptos({
+  //     setLoading,
+  //     setCryptos,
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   if (cryptos.length === 0) {
+  //     getCryptos();
+  //   }
+  // }, []);
+
+  const { remainingTime } = useCryptoData({
+    cryptos,
+    setCryptos,
+    setLoading,
+  });
 
   return (
-    <section className="w-full h-full flex flex-col justify-center items-start gap-0 px-20 py-10">
-      <article className="w-full h-full flex justify-between items-start gap-x-10 gap-y-0 mb-10">
-        <h2 className="text-xl font-semibold text-crypto-dark dark:text-crypto-light">
+    <section className="w-full h-full flex flex-col justify-center items-start gap-0 px-10 py-10">
+      <article className="w-full h-full flex justify-between items-center gap-x-10 gap-y-0 mb-10">
+        <h2 className="text-sm font-semibold text-crypto-dark dark:text-crypto-light">
           Top 10 Crypto Monedas{" "}
         </h2>
+        <CountdownTimer secondsRemaining={remainingTime} />
       </article>
       <section className="w-full h-full flex justify-between items-start gap-x-10 gap-y-0">
         <article className="w-full h-full flex flex-col justify-center items-start gap-10">

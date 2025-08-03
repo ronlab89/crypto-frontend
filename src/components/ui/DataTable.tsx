@@ -10,7 +10,6 @@ import {
 } from "@tanstack/react-table";
 import type { SortingState } from "@tanstack/react-table";
 
-import { useToggleStore } from "@/store/toggle.store";
 import type { DataTableProps } from "@/types/datatable";
 import Angles from "@/icons/Angles";
 import Angle from "@/icons/Angle";
@@ -22,8 +21,6 @@ const DataTable = <T,>({
   search,
   pagination,
 }: DataTableProps<T>) => {
-  const toggleModal = useToggleStore((state) => state.toggleModal);
-  const setToggleModal = useToggleStore((state) => state.setToggleModal);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
@@ -33,7 +30,7 @@ const DataTable = <T,>({
     data,
     columns,
     // getSubRows: (row) => row.subrows || [], // si se tiene subfilas con la misma estructura de la fila original
-    getRowCanExpand: (row) => true,
+    // getRowCanExpand: (row) => true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),

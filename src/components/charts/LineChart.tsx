@@ -103,6 +103,7 @@ export default function LineChart({
       label: ds.label,
       data: ds.data,
       borderColor: getColorFromTailwind(ds.color || "bg-blue-500"),
+      borderWidth: 1,
       backgroundColor: "transparent",
       tension: 0.3,
     })),

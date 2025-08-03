@@ -84,6 +84,7 @@ export default function RadarChart({
         },
         ticks: {
           color: isDarkMode ? "#e5e7eb" : "#1f2937",
+          backdropColor: "transparent",
           font: {
             size: labelFontSize || 12,
             family: fontFamily || "Roboto, sans-serif",

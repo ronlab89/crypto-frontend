@@ -70,6 +70,8 @@ export default function DoughnutChart({
         backgroundColor: (colors ?? labels.map(() => "#3b82f6")).map(
           getColorFromTailwind
         ),
+        borderColor: isDarkMode ? "#111827" : "#ffffff",
+        borderWidth: 1,
       },
     ],
   };
