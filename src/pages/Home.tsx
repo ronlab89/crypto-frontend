@@ -76,7 +76,7 @@ const Home = () => {
   });
 
   return (
-    <section className="w-full h-full flex flex-col justify-center items-start gap-0 px-10 py-10">
+    <section className="w-full h-full overflow-x-hidden overflow-y-auto flex flex-col justify-center items-start gap-0 px-10 pt-[150px] pb-[100px]">
       <article className="w-full h-full flex justify-between items-center gap-x-10 gap-y-0 mb-10">
         <h2 className="text-sm font-semibold text-crypto-dark dark:text-crypto-light">
           Top 10 Crypto Monedas{" "}

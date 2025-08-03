@@ -1,4 +1,4 @@
-import { RegisterOptions } from "react-hook-form";
+import type { RegisterOptions } from "react-hook-form";
 
 type FormValidate = {
   required: RegisterOptions["required"];

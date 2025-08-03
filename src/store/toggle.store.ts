@@ -2,15 +2,22 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 // Tipado general del store
+interface ToggleWithId {
+  status: boolean;
+  id: string | number | null;
+}
+
 interface ToggleState {
   toggleDropdownUser: boolean;
   toggleModal: boolean;
   toggleCryptoSelected: string;
+  toggleShow: ToggleWithId;
 
   // Métodos
   setToggleDropdownUser: (bool: boolean) => void;
   setToggleModal: (bool: boolean) => void;
   setToggleCryptoSelected: (crypto: string) => void;
+  setToggleShow: (status: boolean, id: string) => void;
   resetToggles: () => void;
 }
 
@@ -18,6 +25,7 @@ const initialState = {
   toggleDropdownUser: false,
   toggleModal: false,
   toggleCryptoSelected: "BTC",
+  toggleShow: { status: false, id: null } as ToggleWithId,
 };
 
 export const useToggleStore = create<ToggleState>()(
@@ -29,6 +37,14 @@ export const useToggleStore = create<ToggleState>()(
       setToggleModal: (bool) => set({ toggleModal: bool }),
       setToggleCryptoSelected: (crypto) =>
         set({ toggleCryptoSelected: crypto }),
+      setToggleShow: (bool, id) =>
+        set((state) => ({
+          toggleShow: {
+            status:
+              id === state.toggleShow.id ? !state.toggleShow.status : bool,
+            id: id === state.toggleShow.id ? null : id,
+          },
+        })),
 
       resetToggles: () => set(initialState),
     }),

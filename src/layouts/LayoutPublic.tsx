@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 
 const LayoutPublic = () => {
   return (
-    <main className="min-w-screen max-w-screen min-h-screen max-h-screen overflow-x-hidden bg-crypto-light dark:bg-crypto-dark text-crypto-dark dark:text-crypto-light font-crypto-body">
+    <main className="min-w-screen max-w-screen min-h-screen h-screen max-h-full overflow-hidden bg-crypto-light dark:bg-crypto-dark text-crypto-dark dark:text-crypto-light font-crypto-body">
       <Navbar />
       <Outlet />
       <Toaster />
