@@ -71,10 +71,10 @@ const signup = async ({
 
 const logout = async ({
   setLoading,
+  token,
+  navigate,
   resetAuth,
-  resetCoinmarket,
   resetLoading,
-  resetTimer,
   resetToggles,
 }: LogoutProps): Promise<void> => {
   try {
@@ -82,14 +82,15 @@ const logout = async ({
     const res = await axios({
       method: "post",
       url: `${import.meta.env.VITE_API_URL_BASE}/auth/logout`,
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (res.status === 200) {
       resetAuth();
-      resetCoinmarket();
       resetLoading();
-      resetTimer();
       resetToggles();
+      navigate("/");
       notify("success", "Sesión cerrada");
     }
   } catch (error) {

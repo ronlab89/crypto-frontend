@@ -14,7 +14,6 @@ const getAllCryptos = async ({
       withCredentials: true,
     });
     if (res.status === 200) {
-      console.log({ cryptos: res.data });
       const cryptos = res.data.data;
       notify("success", "Datos de cryptos cargados");
       setCryptos(cryptos);

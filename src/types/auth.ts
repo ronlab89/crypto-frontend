@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from "react";
 import type { UserType } from "./User";
 import type { User } from "@/store/auth.store";
 
@@ -24,10 +23,9 @@ export interface RegisterProps {
 
 export interface LogoutProps {
   setLoading: (key: string, value: boolean) => void;
-  setError: Dispatch<SetStateAction<string | null>>;
+  token: string | null;
+  navigate: (to: string) => void;
   resetAuth: () => void;
-  resetCoinmarket: () => void;
   resetLoading: () => void;
-  resetTimer: () => void;
   resetToggles: () => void;
 }
