@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 
 // Tipado general del store
 export type User = {
+  id: number;
   name: string;
   lastName: string;
   email: string;

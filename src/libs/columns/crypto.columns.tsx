@@ -10,7 +10,7 @@ dayjs.extend(localizedFormat);
 
 const columnHelper = createColumnHelper<Crypto>();
 
-export const customersColumns = [
+export const cryptoPublicColumns = [
   // {
   //   id: "select",
   //   header: ({ table }) => (
@@ -72,6 +72,52 @@ export const customersColumns = [
           {updatedAt ? dayjs(updatedAt).locale("es").format("LL") : "--"}
         </span>
       );
+    },
+  }),
+  columnHelper.display({
+    id: "acciones",
+    header: "",
+    cell: ({ row }) => <SelectButton crypto={row.original.symbol} />,
+  }),
+] as ColumnDef<Crypto, unknown>[];
+
+export const cryptoSelectedColumns = [
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <IndeterminateCheckbox
+  //       {...{
+  //         checked: table.getIsAllRowsSelected(),
+  //         indeterminate: table.getIsSomeRowsSelected(),
+  //         onChange: table.getToggleAllRowsSelectedHandler(),
+  //       }}
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="px-1">
+  //       <IndeterminateCheckbox
+  //         {...{
+  //           checked: row.getIsSelected(),
+  //           disabled: !row.getCanSelect(),
+  //           indeterminate: row.getIsSomeSelected(),
+  //           onChange: row.getToggleSelectedHandler(),
+  //         }}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  columnHelper.accessor("id", {
+    header: "ID",
+    cell: ({ row }) => <span>{row?.original?.id}</span>,
+  }),
+  columnHelper.accessor("name", {
+    header: "Nombre",
+    cell: ({ row }) => <span>{row?.original?.name}</span>,
+  }),
+  columnHelper.accessor("symbol", {
+    header: "Símbolo",
+    cell: ({ row }) => {
+      return <span>{row?.original?.symbol}</span>;
     },
   }),
   columnHelper.display({

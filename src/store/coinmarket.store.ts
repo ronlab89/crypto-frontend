@@ -1,19 +1,22 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Crypto } from "@/types/crypto";
+import type { Crypto, CryptoDropdown } from "@/types/crypto";
 
 // Tipado general del store
 
 interface CoinmarketState {
   cryptos: Crypto[];
+  cryptosToDropdown: CryptoDropdown[];
 
   // Métodos
   setCryptos: (data: Crypto[]) => void;
+  setCryptosToDropdown: (data: CryptoDropdown[]) => void;
   resetCoinmarket: () => void;
 }
 
 const initialState = {
   cryptos: [],
+  cryptosToDropdown: [],
 };
 
 export const useCoinmarketStore = create<CoinmarketState>()(
@@ -22,6 +25,7 @@ export const useCoinmarketStore = create<CoinmarketState>()(
       ...initialState,
 
       setCryptos: (data) => set({ cryptos: data }),
+      setCryptosToDropdown: (data) => set({ cryptosToDropdown: data }),
 
       resetCoinmarket: () => set(initialState),
     }),

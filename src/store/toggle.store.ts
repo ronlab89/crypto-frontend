@@ -12,12 +12,14 @@ interface ToggleState {
   toggleModal: boolean;
   toggleCryptoSelected: string;
   toggleShow: ToggleWithId;
+  toggleSearchDropdown: boolean;
 
   // Métodos
   setToggleDropdownUser: (bool: boolean) => void;
   setToggleModal: (bool: boolean) => void;
   setToggleCryptoSelected: (crypto: string) => void;
   setToggleShow: (status: boolean, id: string) => void;
+  setToggleSearchDropdown: (bool: boolean) => void;
   resetToggles: () => void;
 }
 
@@ -26,6 +28,7 @@ const initialState = {
   toggleModal: false,
   toggleCryptoSelected: "BTC",
   toggleShow: { status: false, id: null } as ToggleWithId,
+  toggleSearchDropdown: false,
 };
 
 export const useToggleStore = create<ToggleState>()(
@@ -45,6 +48,7 @@ export const useToggleStore = create<ToggleState>()(
             id: id === state.toggleShow.id ? null : id,
           },
         })),
+      setToggleSearchDropdown: (bool) => set({ toggleSearchDropdown: bool }),
 
       resetToggles: () => set(initialState),
     }),

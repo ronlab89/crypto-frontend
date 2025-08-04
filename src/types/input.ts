@@ -52,3 +52,12 @@ export interface SelectProps
   ) => void | Promise<void | boolean>;
   onBlur?: (e: FocusEvent<HTMLSelectElement>) => void | Promise<void | boolean>;
 }
+
+export interface SearchInputProps {
+  filtering: string;
+  setFiltering: (filtering: string) => void;
+  id: string;
+  width: string;
+  placeholder: string;
+  required: boolean;
+}

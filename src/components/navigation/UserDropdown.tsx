@@ -32,7 +32,7 @@ const UserDropdown = () => {
     <div
       className={`${
         toggleDropdownUser ? "absolute top-[25px] right-[-10px]" : "hidden"
-      } z-50 my-4 w-56 text-base list-none bg-zinc-100/30 dark:bg-zinc-900 rounded divide-y divide-gray-100 shadow dark:divide-gray-600`}
+      } z-[100] my-4 w-56 text-base list-none bg-crypto-light dark:bg-crypto-dark rounded divide-y divide-gray-100 shadow dark:divide-gray-600`}
       id="dropdown"
     >
       <div className="py-3 px-4">

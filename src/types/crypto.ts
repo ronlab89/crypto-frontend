@@ -35,3 +35,10 @@ export interface Crypto {
     };
   };
 }
+
+export interface CryptoDropdown {
+  id: number;
+  cmcId: number;
+  symbol: string;
+  name: string;
+}

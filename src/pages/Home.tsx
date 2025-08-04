@@ -1,9 +1,7 @@
-// import { useEffect } from "react";
 import DataTable from "@/components/ui/DataTable";
 import { useCoinmarketStore } from "@/store/coinmarket.store";
-// import { getAllCryptos } from "@/libs/services/coinmarket";
 import { useLoadingStore } from "@/store/loading.store";
-import { customersColumns } from "@/libs/columns/crypto.columns";
+import { cryptoPublicColumns } from "@/libs/columns/crypto.columns";
 import Loader from "@/components/ui/Loader";
 import BarChart from "@/components/charts/BarChart";
 import LineChart from "@/components/charts/LineChart";
@@ -87,7 +85,7 @@ const Home = () => {
         <article className="w-full h-full flex flex-col justify-center items-start gap-10">
           <DataTable
             data={cryptos ?? []}
-            columns={customersColumns}
+            columns={cryptoPublicColumns}
             filter={false}
             search={false}
             pagination={false}
