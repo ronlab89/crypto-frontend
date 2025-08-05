@@ -20,6 +20,7 @@ const DataTable = <T,>({
   columns,
   search,
   pagination,
+  initialPages,
 }: DataTableProps<T>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState("");
@@ -45,7 +46,7 @@ const DataTable = <T,>({
     },
     initialState: {
       pagination: {
-        pageSize: 10,
+        pageSize: initialPages || 10,
       },
     },
     onSortingChange: setSorting,
@@ -214,7 +215,7 @@ const DataTable = <T,>({
               <span>de</span>
               <span>{table.getPageCount()}</span>
             </div>
-            <div
+            <button
               onClick={() => table.setPageIndex(0)}
               className={`${
                 table.getState().pagination.pageIndex === 0
@@ -227,8 +228,8 @@ const DataTable = <T,>({
                 height={12.8}
                 styles={"group-hover:text-crypto-yellow"}
               />
-            </div>
-            <div
+            </button>
+            <button
               onClick={() => table.previousPage()}
               className={`${
                 table.getState().pagination.pageIndex === 0
@@ -241,8 +242,8 @@ const DataTable = <T,>({
                 height={12.8}
                 styles={"group-hover:text-crypto-yellow"}
               />
-            </div>
-            <div
+            </button>
+            <button
               onClick={() => {
                 if (
                   table.getState().pagination.pageIndex + 2 <=
@@ -263,8 +264,8 @@ const DataTable = <T,>({
                 height={12.8}
                 styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
               />
-            </div>
-            <div
+            </button>
+            <button
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               className={`${
                 table.getState().pagination.pageIndex + 2 <=
@@ -278,7 +279,7 @@ const DataTable = <T,>({
                 height={12.8}
                 styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
               />
-            </div>
+            </button>
           </div>
         </article>
       ) : null}

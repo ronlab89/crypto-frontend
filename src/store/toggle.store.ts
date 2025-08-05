@@ -26,7 +26,7 @@ interface ToggleState {
 const initialState = {
   toggleDropdownUser: false,
   toggleModal: false,
-  toggleCryptoSelected: "BTC",
+  toggleCryptoSelected: "",
   toggleShow: { status: false, id: null } as ToggleWithId,
   toggleSearchDropdown: false,
 };

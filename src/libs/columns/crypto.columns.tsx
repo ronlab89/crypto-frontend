@@ -123,6 +123,10 @@ export const cryptoSelectedColumns = [
   columnHelper.display({
     id: "acciones",
     header: "",
-    cell: ({ row }) => <SelectButton crypto={row.original.symbol} />,
+    cell: ({ row }) => (
+      <div className="w-full h-full flex justify-center items-center">
+        <SelectButton crypto={row.original.id} />,
+      </div>
+    ),
   }),
 ] as ColumnDef<Crypto, unknown>[];

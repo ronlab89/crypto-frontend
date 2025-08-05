@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store/auth.store";
 import { addCryptoUser } from "@/libs/services/cryptousers";
 import { useLoadingStore } from "@/store/loading.store";
 import { useUserStore } from "@/store/user.store";
+import { notify } from "@/libs/utils/alertNotify";
 
 const SearchDropdown = () => {
   const toggleSearchDropdown = useToggleStore(
@@ -20,6 +21,8 @@ const SearchDropdown = () => {
   const setLoading = useLoadingStore((state) => state.setLoading);
   const cryptosSelected = useUserStore((state) => state.cryptosSelected);
   const setCryptosSelected = useUserStore((state) => state.setCryptosSelected);
+  const setCryptosQuote = useUserStore((state) => state.setCryptosQuote);
+  const setCryptosHistory = useUserStore((state) => state.setCryptosHistory);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -31,16 +34,26 @@ const SearchDropdown = () => {
   const handleAddCryptos = async () => {
     const userId = userLogged?.id;
     if (typeof userId !== "number") {
-      console.error("User ID is not defined.");
+      notify("error", "User ID is not defined.");
       return;
     }
-    console.log({ selectedIds, userId });
+    const userIdsSelected = cryptosSelected.map((crypto) => Number(crypto.id));
+    console.log({ userIdsSelected, selectedIds });
+
+    const selectedCmcIds = filteredCryptos
+      .filter((crypto) => userIdsSelected.includes(crypto.id))
+      .map((crypto) => crypto.cmcId)
+      .join(",");
+
     await addCryptoUser({
       setLoading,
       token,
       userId,
       selectedIds,
       setCryptosSelected,
+      selectedCmcIds,
+      setCryptosQuote,
+      setCryptosHistory,
     });
     setSelectedIds([]);
     setSearchTerm("");

@@ -6,4 +6,5 @@ export interface DataTableProps<T> {
   filter?: boolean;
   search?: boolean;
   pagination?: boolean;
+  initialPages?: number;
 }

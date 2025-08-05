@@ -54,19 +54,6 @@ const Home = () => {
       ]
     : [0, 0, 0, 0, 0];
 
-  // const getCryptos = async () => {
-  //   await getAllCryptos({
-  //     setLoading,
-  //     setCryptos,
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (cryptos.length === 0) {
-  //     getCryptos();
-  //   }
-  // }, []);
-
   const { remainingTime } = useCryptoData({
     cryptos,
     setCryptos,
