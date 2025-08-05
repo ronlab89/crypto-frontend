@@ -110,7 +110,7 @@ const DataTable = <T,>({
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
-                  className={`text-center py-2.5 ${
+                  className={`text-center py-2.5 text-xs sm:text-sm ${
                     index === 0
                       ? ""
                       : index === headerGroup.headers.length - 1 && ""
@@ -153,7 +153,10 @@ const DataTable = <T,>({
                   }`}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className={`text-center py-2.5`}>
+                    <td
+                      key={cell.id}
+                      className={`text-center py-2.5 text-[0.6rem] sm:text-xs`}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -185,7 +188,7 @@ const DataTable = <T,>({
       {/* Pagination */}
       {pagination ? (
         <article
-          className={`w-full flex justify-between items-center gap-1 mt-5`}
+          className={`w-full flex flex-col sm:flex-row justify-between items-center gap-5 sm:gap-1 mt-5`}
         >
           <div className="flex justify-center items-center gap-2 ml-5">
             <label htmlFor="select-page-size">Mostrar</label>
@@ -208,78 +211,80 @@ const DataTable = <T,>({
             <span>por página</span>
           </div>
 
-          <div className="flex justify-center items-center gap-2 mr-5 z-10">
+          <div className="text-xs xl:text-[0.875rem] flex justify-center items-center gap-2 mr-5 z-10">
             <div className="flex justify-center items-center gap-2">
               <span>Página</span>
               <span>{table.getState().pagination.pageIndex + 1}</span>
               <span>de</span>
               <span>{table.getPageCount()}</span>
             </div>
-            <button
-              onClick={() => table.setPageIndex(0)}
-              className={`${
-                table.getState().pagination.pageIndex === 0
-                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
-                  : "text-crypto-dark"
-              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
-            >
-              <Angles
-                width={12.8}
-                height={12.8}
-                styles={"group-hover:text-crypto-yellow"}
-              />
-            </button>
-            <button
-              onClick={() => table.previousPage()}
-              className={`${
-                table.getState().pagination.pageIndex === 0
-                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
-                  : "text-crypto-dark"
-              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
-            >
-              <Angle
-                width={12.8}
-                height={12.8}
-                styles={"group-hover:text-crypto-yellow"}
-              />
-            </button>
-            <button
-              onClick={() => {
-                if (
+            <div className="flex justify-center items-center gap-2">
+              <button
+                onClick={() => table.setPageIndex(0)}
+                className={`${
+                  table.getState().pagination.pageIndex === 0
+                    ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                    : "text-crypto-dark"
+                } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+              >
+                <Angles
+                  width={12.8}
+                  height={12.8}
+                  styles={"group-hover:text-crypto-yellow"}
+                />
+              </button>
+              <button
+                onClick={() => table.previousPage()}
+                className={`${
+                  table.getState().pagination.pageIndex === 0
+                    ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                    : "text-crypto-dark"
+                } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+              >
+                <Angle
+                  width={12.8}
+                  height={12.8}
+                  styles={"group-hover:text-crypto-yellow"}
+                />
+              </button>
+              <button
+                onClick={() => {
+                  if (
+                    table.getState().pagination.pageIndex + 2 <=
+                    table.getPageCount()
+                  ) {
+                    table.nextPage();
+                  }
+                }}
+                className={`${
                   table.getState().pagination.pageIndex + 2 <=
                   table.getPageCount()
-                ) {
-                  table.nextPage();
-                }
-              }}
-              className={`${
-                table.getState().pagination.pageIndex + 2 <=
-                table.getPageCount()
-                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
-                  : "text-crypto-dark"
-              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
-            >
-              <Angle
-                width={12.8}
-                height={12.8}
-                styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
-              />
-            </button>
-            <button
-              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-              className={`${
-                table.getState().pagination.pageIndex + 2 <=
-                table.getPageCount()
-                  ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
-                  : "text-crypto-dark"
-              } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
-            >
-              <Angles
-                width={12.8}
-                height={12.8}
-                styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
-              />
-            </button>
+                    ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                    : "text-crypto-dark"
+                } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+              >
+                <Angle
+                  width={12.8}
+                  height={12.8}
+                  styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
+                />
+              </button>
+              <button
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                className={`${
+                  table.getState().pagination.pageIndex + 2 <=
+                  table.getPageCount()
+                    ? "cursor-pointer text-dizlogik-800 hover:border-crypto-yellow"
+                    : "text-crypto-dark"
+                } group w-8 h-8 border-[1.5px] border-crypto-dark/50 dark:border-crypto-light/50 rounded-[.5rem] flex justify-center items-center transition-colors duration-300`}
+              >
+                <Angles
+                  width={12.8}
+                  height={12.8}
+                  styles={"rotate-[-180deg] group-hover:text-crypto-yellow"}
+                />
+              </button>
+            </div>
           </div>
         </article>
       ) : null}

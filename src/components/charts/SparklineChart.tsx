@@ -78,7 +78,7 @@ export default function SparklineChart({
           {subtitle}
         </p>
       </div>
-      <div className="md:w-[40vw] lg:w-[20vw] xl:w-full h-16 mt-2">
+      <div className="w-[80vw] sm:w-[38vw] md:w-[40vw] lg:w-[19vw] xl:w-[20vw] 2xl:w-[21vw] h-16 mt-2">
         <Line data={sparklineData} options={sparklineOptions} />
       </div>
     </div>

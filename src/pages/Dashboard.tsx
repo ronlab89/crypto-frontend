@@ -3,7 +3,6 @@ import { useToggleStore } from "@/store/toggle.store";
 import Button from "@/components/ui/Button";
 import Angle from "@/icons/Angle";
 import { useLoadingStore } from "@/store/loading.store";
-import Loader from "@/components/ui/Loader";
 import { syncCryptos } from "@/libs/services/coinmarket";
 import { useCoinmarketStore } from "@/store/coinmarket.store";
 import { useAuthStore } from "@/store/auth.store";
@@ -15,6 +14,10 @@ import SparklineChart from "@/components/charts/SparklineChart";
 import BarChart from "@/components/charts/BarChart";
 import { CountdownTimer } from "@/components/ui/CountDownTimer";
 import useCryptosQuoteData from "@/hooks/useCryptosQuoteData";
+import { getCryptosUser } from "@/libs/services/cryptousers";
+
+const Loader = lazy(() => import("@/components/ui/Loader"));
+const Modal = lazy(() => import("@/components/ui/Modal"));
 
 const SearchDropdown = lazy(() => import("@/components/ui/SearchDropdown"));
 
@@ -35,11 +38,14 @@ const Dashboard = () => {
   );
   const token = useAuthStore((state) => state.token);
   const cryptosSelected = useUserStore((state) => state.cryptosSelected);
+  const setCryptosSelected = useUserStore((state) => state.setCryptosSelected);
   const cryptosQuote = useUserStore((state) => state.cryptosQuote);
   const setCryptosQuote = useUserStore((state) => state.setCryptosQuote);
   const toggleCryptoSelected = useToggleStore(
     (state) => state.toggleCryptoSelected
   );
+  const userLogged = useAuthStore((state) => state.userLogged);
+  const setCryptosHistory = useUserStore((state) => state.setCryptosHistory);
 
   const { remainingTimeQuote } = useCryptosQuoteData({
     token,
@@ -56,9 +62,29 @@ const Dashboard = () => {
     });
   };
 
+  const userIdsSelected = cryptosSelected.map((crypto) => Number(crypto.id));
+
+  const cmcIds = cryptosToDropdown
+    .filter((crypto) => userIdsSelected.includes(crypto.id))
+    .map((crypto) => crypto.cmcId)
+    .join(",");
+
   useEffect(() => {
     if (cryptosToDropdown.length === 0) {
       sync();
+    }
+    if (cryptosSelected.length === 0) {
+      if (userLogged) {
+        getCryptosUser({
+          setLoading,
+          token,
+          userId: userLogged.id,
+          setCryptosSelected,
+          selectedCmcIds: cmcIds,
+          setCryptosQuote,
+          setCryptosHistory,
+        });
+      }
     }
   }, []);
 
@@ -87,8 +113,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <section className="w-full h-full overflow-x-hidden overflow-y-auto flex flex-col justify-start items-start gap-0 px-10 pt-[0px] pb-[100px]">
-      <article className="w-full h-[100px] flex justify-between items-center order-1">
+    <section className="w-full h-full overflow-x-hidden overflow-y-auto flex flex-col justify-start items-start gap-0 px-[20px] sm:px-10 pt-[0px] pb-[100px]">
+      <article className="w-full h-[100px] flex flex-col sm:flex-row sm:justify-between items-center order-1">
         <CountdownTimer secondsRemaining={remainingTimeQuote} />
         <div className="relative">
           <Button
@@ -109,7 +135,7 @@ const Dashboard = () => {
           </Suspense>
         </div>
       </article>
-      <section className="w-full h-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10 justify-items-center items-center order-3 lg:order-2">
+      <section className="w-full h-fit 2xl:px-[0px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 justify-items-center items-center order-3 lg:order-2 mt-10 lg:mt-0">
         <SparklineChart
           title={`Precio ${data?.name} (USD)`}
           value={`${formatterus.format(data?.quote?.USD.price)}`}
@@ -164,9 +190,9 @@ const Dashboard = () => {
           isPositive={data?.quote?.USD?.percent_change_30d >= 0}
         />
       </section>
-      <section className="w-full h-fit flex flex-col gap-10 lg:px-[50px] order-2 lg:order-3">
+      <section className="w-full h-fit flex flex-col gap-10 lg:px-[20px] order-2 lg:order-3 mt-5 sm:mt-0 lg:mt-10">
         <section className="w-full h-fit flex flex-col lg:flex-row lg:justify-between items-center">
-          <article className="w-full lg:w-[60vw] relative">
+          <article className="w-full lg:w-full relative">
             <DataTable
               data={cryptosSelected ?? []}
               columns={cryptoSelectedColumns}
@@ -176,8 +202,8 @@ const Dashboard = () => {
               initialPages={7}
             />
           </article>
-          <article className="w-full flex flex-col justify-end items-end gap-10">
-            <div className="w-full lg:w-[40vw] h-fit md:pt-[150px] lg:pt-0">
+          <article className="w-full flex flex-col justify-end items-end gap-10 mt-50 sm:mt-40 md:mt-0">
+            <div className="w-full lg:w-[90%] h-fit md:pt-[150px] lg:pt-0">
               <BarChart
                 title="Resumen de rendimiento"
                 showTitle={false}
@@ -186,19 +212,24 @@ const Dashboard = () => {
                 data={percentageDatasets[0].data}
                 color=""
                 width="w-full"
-                height="h-[35vh]"
+                height="h-[25vh] sm:h-[35vh]"
               />
             </div>
           </article>
         </section>
       </section>
+      <Suspense fallback={""}>
+        <Modal />
+      </Suspense>
       {loading?.syncCryptos ||
       loading?.cryptosToDropdown ||
       loading.addUserCryptos ||
       loading.getUserCryptos ||
       loading.cryptosQuote ||
       loading.addCryptosHistory ? (
-        <Loader text="" />
+        <Suspense fallback={""}>
+          <Loader text="" />
+        </Suspense>
       ) : null}
     </section>
   );

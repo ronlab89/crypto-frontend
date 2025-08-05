@@ -16,8 +16,8 @@ interface CryptoTimerState {
   resetTimer: () => void;
 }
 
-export const REFRESH_INTERVAL = 1800;
-export const REFRESH_INTERVAL_QUOTE = 600;
+export const REFRESH_INTERVAL = 900;
+export const REFRESH_INTERVAL_QUOTE = 900;
 
 const initialState: Omit<
   CryptoTimerState,

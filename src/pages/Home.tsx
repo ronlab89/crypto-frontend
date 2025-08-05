@@ -61,15 +61,15 @@ const Home = () => {
   });
 
   return (
-    <section className="w-full h-full overflow-x-hidden overflow-y-auto flex flex-col justify-center items-start gap-0 px-10 pt-[150px] pb-[100px]">
-      <article className="w-full h-full flex justify-between items-center gap-x-10 gap-y-0 mb-10">
+    <section className="w-full h-full overflow-x-hidden overflow-y-auto flex flex-col justify-center items-start gap-0 px-5 sm:px-10 pt-[65vh] 5xs:pt-[54vh] sm:pt-[45vh] md:pt-[42vh] lg:pt-[150px] pb-[0px] lg:pb-[100px]">
+      <article className="w-full h-full flex flex-col sm:flex-row sm:justify-between items-center gap-x-10 gap-y-0 sm:mb-10">
         <h2 className="text-sm font-semibold text-crypto-dark dark:text-crypto-light">
           Top 10 Crypto Monedas{" "}
         </h2>
         <CountdownTimer secondsRemaining={remainingTime} />
       </article>
-      <section className="w-full h-full flex justify-between items-start gap-x-10 gap-y-0">
-        <article className="w-full h-full flex flex-col justify-center items-start gap-10">
+      <section className="w-full h-fit flex flex-col items-center justify-start lg:flex-row lg:justify-between lg:items-start gap-x-10 gap-y-0">
+        <article className="w-full max-h-full overflow-x-auto overflow-y-hidden h-fit flex flex-col justify-center items-start gap-10 mb-10 lg:mb-0">
           <DataTable
             data={cryptos ?? []}
             columns={cryptoPublicColumns}
@@ -78,8 +78,8 @@ const Home = () => {
             pagination={false}
           />
         </article>
-        <article className="">
-          <div className="w-[30vw] h-fit">
+        <article className="w-full lg:w-[30vw] h-fit">
+          <div className="w-full lg:w-[30vw] h-fit">
             <RadarChart
               title={`Análisis técnico: ${toggleCryptoSelected}`}
               showTitle={false}
@@ -88,23 +88,23 @@ const Home = () => {
               label="BTC"
               color="bg-red-500"
               width="w-full"
-              height="h-[50vh]"
+              height="h-[25vh] sm:h-[30vh] lg:h-[50vh]"
             />
           </div>
         </article>
       </section>
-      <section className="w-full h-full flex justify-between items-start gap-5 p-0 mt-10">
-        <div className="w-[30vw] h-fit">
+      <section className="w-full h-full flex flex-col lg:flex-row lg:justify-between lg:items-start gap-10 lg:gap-5 p-0 mt-10">
+        <div className="w-full lg:w-[30vw] h-fit">
           <LineChart
             title="Variación porcentual (1h, 24h, 7d, 30d)"
             showTitle={false}
             labels={timeLabels}
             datasets={percentageDatasets}
             width="w-full"
-            height="h-[35vh]"
+            height="h-[25vh] sm:h-[30vh] lg:h-[35vh]"
           />
         </div>
-        <div className="w-[30vw] h-fit">
+        <div className="w-full lg:w-[30vw] h-fit">
           <BarChart
             title="Volumen 24h (USD)"
             showTitle={false}
@@ -113,11 +113,10 @@ const Home = () => {
             data={volumeData}
             color="bg-green-400"
             width="w-full"
-            height="h-[35vh]"
+            height="h-[25vh] sm:h-[30vh] lg:h-[35vh]"
           />
         </div>
-
-        <div className="w-[30vw] h-fit">
+        <div className="w-full lg:w-[30vw] h-fit">
           <DoughnutChart
             title="Dominancia del mercado"
             showTitle={false}
@@ -136,7 +135,7 @@ const Home = () => {
               "bg-purple-500",
             ]}
             width="w-full"
-            height="h-[35vh]"
+            height="h-[25vh] sm:h-[30vh] lg:h-[35vh]"
           />
         </div>
       </section>

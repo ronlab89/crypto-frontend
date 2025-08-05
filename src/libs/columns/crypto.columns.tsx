@@ -6,6 +6,7 @@ import "dayjs/locale/es";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { formatterus } from "../utils/formatter";
 import SelectButton from "@/components/table/SelectButton";
+import HistoryButton from "@/components/table/HistoryButton";
 dayjs.extend(localizedFormat);
 
 const columnHelper = createColumnHelper<Crypto>();
@@ -68,7 +69,7 @@ export const cryptoPublicColumns = [
     cell: ({ row }) => {
       const updatedAt = row?.original?.last_updated;
       return (
-        <span>
+        <span className="">
           {updatedAt ? dayjs(updatedAt).locale("es").format("LL") : "--"}
         </span>
       );
@@ -117,16 +118,17 @@ export const cryptoSelectedColumns = [
   columnHelper.accessor("symbol", {
     header: "Símbolo",
     cell: ({ row }) => {
-      return <span>{row?.original?.symbol}</span>;
+      return <span className="">{row?.original?.symbol}</span>;
     },
   }),
   columnHelper.display({
     id: "acciones",
     header: "",
     cell: ({ row }) => (
-      <div className="w-full h-full flex justify-center items-center">
-        <SelectButton crypto={row.original.id} />,
-      </div>
+      <article className="w-full h-full flex justify-around items-center">
+        <SelectButton crypto={row.original.id} />
+        <HistoryButton crypto={row.original.name} />
+      </article>
     ),
   }),
 ] as ColumnDef<Crypto, unknown>[];

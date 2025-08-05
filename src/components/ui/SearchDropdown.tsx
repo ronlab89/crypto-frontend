@@ -62,7 +62,7 @@ const SearchDropdown = () => {
   return (
     <div
       id="dropdownSearch"
-      className={`z-10 ${
+      className={`z-50 ${
         toggleSearchDropdown ? "absolute right-[15px]" : "hidden"
       } bg-crypto-light dark:bg-crypto-dark rounded-lg shadow-sm w-60 flex flex-col items-start`}
     >

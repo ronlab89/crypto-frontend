@@ -24,6 +24,8 @@ export interface getCryptoUserProps {
 export type SaveHistoryItem = {
   userId: number;
   cryptoId: number;
+  name: string;
+  symbol: string;
   price: number;
   market_cap: number;
   volume24h: number;

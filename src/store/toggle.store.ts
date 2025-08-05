@@ -7,12 +7,24 @@ interface ToggleWithId {
   id: string | number | null;
 }
 
+export interface itemData {
+  id: string | number;
+  name: string;
+  symbol: string;
+  market_cap: number;
+  price: number;
+  volume_24h: number;
+  percent_change_24h: number;
+  createdAt: string;
+}
+
 interface ToggleState {
   toggleDropdownUser: boolean;
   toggleModal: boolean;
   toggleCryptoSelected: string;
   toggleShow: ToggleWithId;
   toggleSearchDropdown: boolean;
+  modalData?: itemData[];
 
   // Métodos
   setToggleDropdownUser: (bool: boolean) => void;
@@ -20,6 +32,7 @@ interface ToggleState {
   setToggleCryptoSelected: (crypto: string) => void;
   setToggleShow: (status: boolean, id: string) => void;
   setToggleSearchDropdown: (bool: boolean) => void;
+  setModalData: (data: itemData[]) => void;
   resetToggles: () => void;
 }
 
@@ -29,6 +42,7 @@ const initialState = {
   toggleCryptoSelected: "",
   toggleShow: { status: false, id: null } as ToggleWithId,
   toggleSearchDropdown: false,
+  modalData: [],
 };
 
 export const useToggleStore = create<ToggleState>()(
@@ -49,6 +63,7 @@ export const useToggleStore = create<ToggleState>()(
           },
         })),
       setToggleSearchDropdown: (bool) => set({ toggleSearchDropdown: bool }),
+      setModalData: (data: itemData[]) => set({ modalData: data }),
 
       resetToggles: () => set(initialState),
     }),
