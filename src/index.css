@@ -1,68 +1,63 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap');
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* color */
+    --color-crypto-yellow: #f0b90b;
+    --color-crypto-dark: #0c0e12;
+    --color-crypto-light: #FFFFFF;
+    /* font-family */
+    --font-crypto-title: 'Audiowide', sans-serif;
+    --font-crypto-body: 'Roboto', sans-serif;
+    /* Breakpoints */
+  --breakpoint-xs: 17.5rem; /* 280px */
+  --breakpoint-2xs: 20rem; /* 320px */
+  --breakpoint-3xs: 22.5rem; /* 360px */
+  --breakpoint-4xs: 23.4375rem; /* 375px */
+  --breakpoint-5xs: 24.375rem; /* 390px */
+  --breakpoint-6xs: 25.875rem; /* 415px */
+  --breakpoint-7xs: 26.875rem; /* 430px */
+  --breakpoint-sm: 40rem; /* 640px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-2md: 51.25rem; /* 820px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-2xl: 90rem; /* 1440px */
+  --breakpoint-3xl: 96rem; /* 1536px */
+  --breakpoint-4xl: 100rem; /* 1600px */
+  --breakpoint-5xl: 120rem; /* 1920px */
+  --breakpoint-6xl: 140rem; /* 2240px */
+  /* Containers */
+  --container-xs: 17.5rem; /* 280px */
+  --container-2xs: 20rem; /* 320px */
+  --container-3xs: 22.5rem; /* 360px */
+  --container-4xs: 23.4375rem; /* 375px */
+  --container-5xs: 24.375rem; /* 390px */
+  --container-6xs: 25.875rem; /* 415px */
+  --container-7xs: 26.875rem; /* 430px */
+  --container-sm: 40rem; /* 640px */
+  --container-md: 48rem; /* 768px */
+  --container-2md: 51.25rem; /* 820px */
+  --container-lg: 64rem; /* 1024px */
+  --container-xl: 80rem; /* 1280px */
+  --container-2xl: 90rem; /* 1440px */
+  --container-3xl: 96rem; /* 1536px */
+  --container-4xl: 100rem; /* 1600px */
+  --container-5xl: 120rem; /* 1920px */
+  --container-6xl: 140rem; /* 2240px */
+}
+
+
+.audiowide {
+  font-family: "Audiowide", sans-serif;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.roboto {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400 500 700 900;
+  font-style: normal;
 }

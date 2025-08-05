@@ -1,69 +1,93 @@
-# React + TypeScript + Vite
+# 🪙 CryptoInvestment Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es el frontend de la aplicación **CryptoInvestment**, que permite a los usuarios visualizar, seleccionar y hacer seguimiento al historial de precios de distintas criptomonedas en tiempo real, consumiendo datos desde CoinMarketCap y un backend en NestJS.
 
-Currently, two official plugins are available:
+## 🛠️ Tecnologías Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Vite** — Entorno de desarrollo rápido
+- **React** — Biblioteca para interfaces de usuario
+- **TypeScript** — Tipado estático
+- **Tailwind CSS** — Framework de estilos utilitarios
+- **Zustand** — Manejo global de estado
+- **React Router DOM** — Enrutamiento de páginas
+- **React Hook Form** — Manejo de formularios
+- **TanStack React Table** — Renderizado eficiente de tablas
+- **react-chartjs-2** — Gráficas interactivas
+- **Sonner** — Alertas y notificaciones modernas
+- **Hooks personalizados y componentes reusables** — Para mantener el código limpio y escalable
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📦 Instalación
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. Clonar el repositorio
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/ronlab89/crypto-frontend.git
+cd crypto-frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Instalar dependencias
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+yarn install
 ```
+
+### 3. Iniciar el servidor de desarrollo
+
+```bash
+yarn dev
+```
+
+- Esto levantará el proyecto en http://localhost:5173
+
+### 4. Variables de entorno
+
+Crea un archivo .env en la raíz del proyecto con la siguiente configuración:
+
+```
+VITE_API_URL_BASE=http://localhost:3000/api/v1
+```
+
+---
+
+### 5. 📁 Estructura del proyecto
+
+```
+src/
+├── assets/css             # Archivos CSS personalizados
+├── components/            # Componentes reusables.
+├── icons/                 # Iconos personalizados
+├── layouts/               # Layouts de páginas publico y privado
+├── hooks/                 # Hooks personalizados
+├── pages/                 # Vistas principales del proyecto.
+├── router/                # Configuración de rutas
+├── store/                 # Estados globales con Zustand
+├── libs/
+│   └── services/          # Lógica para conectar con API
+│   └── utils/             # Funciones y utilidades
+│   └── columns/           # Columnas para tablas
+├── types/                 # Tipados TypeScript compartidos
+├── App.tsx                # Componente raíz
+└── main.tsx               # Punto de entrada
+```
+
+### 6. 🌙 Tema Claro / Oscuro
+
+Se implementó un sistema de tema persistente claro/oscuro usando Zustand y Tailwind. El tema se guarda en localStorage y se puede alternar con un botón en el header.
+
+### 7. Funcionalidades
+
+- ✅ Registro y login de usuarios con validaciones
+
+- ✅ Selección de criptomonedas favoritas
+
+- ✅ Visualización en tabla con filtros y ordenamiento
+
+- ✅ Gráficos de evolución de precios
+
+- ✅ Almacenamiento del historial de precios en backend
+
+- ✅ Notificaciones (Sonner)
+
+- ✅ UI responsive y accesible
